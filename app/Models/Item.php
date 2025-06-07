@@ -31,20 +31,14 @@ class Item extends Model
         'brand',
         'total_stock',
         'category_id',
-        'specification'
     ];
 
     protected $hidden =
     [
-        'creted_at',
+        'created_at',
         'updated_at',
         'deleted_at'
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'item_name';
-    }
 
     public function itemName(): Attribute
     {
@@ -66,13 +60,6 @@ class Item extends Model
     {
         return Attribute::make(
             get: fn($value) => strtoupper($value)
-        );
-    }
-
-    public function specification(): Attribute{
-        return Attribute::make(
-            get:fn ($value) => ucwords($value),
-            set:fn ($value) => strtolower($value)
         );
     }
 

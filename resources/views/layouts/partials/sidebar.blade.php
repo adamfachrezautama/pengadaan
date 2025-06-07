@@ -36,21 +36,21 @@
               </li>
 
               <li class="nav-item">
-                <a href="/departments" class="nav-link">
+                <a href="{{ route('departments.index')}}" class="nav-link">
                   <i class="nav-icon bi bi-palette"></i>
                   <p>Department</p>
                 </a>
               </li>
 
                <li class="nav-item">
-                <a href="/categories" class="nav-link">
+                <a href="{{route('categories.index')}}" class="nav-link">
                   <i class="nav-icon bi bi-palette"></i>
                   <p>Category</p>
                 </a>
               </li>
 
                 <li class="nav-item">
-                <a href="./generate/theme.html" class="nav-link">
+                <a href="{{ route('items.index')}}" class="nav-link">
                   <i class="nav-icon bi bi-palette"></i>
                   <p>Item</p>
                 </a>

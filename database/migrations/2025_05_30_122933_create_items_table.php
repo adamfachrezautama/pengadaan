@@ -18,10 +18,9 @@ return new class extends Migration
             $table->integer('total_stock')->default(0);
             $table->uuid('category_id')->nullable();
             $table->foreign('category_id')
-            ->references('id')
-            ->on('categories'
-            )->nullOnDelete();
-            $table->text('specification')->nullable();
+                ->references('id')
+                ->on('categories')
+                ->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

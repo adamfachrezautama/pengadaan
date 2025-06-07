@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('item_details', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('item_id')->unique();
+            $table->uuid('item_id');
             $table->foreign('item_id')
             ->references('id')
             ->on('items')->onDelete('cascade');

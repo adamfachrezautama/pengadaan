@@ -24,9 +24,10 @@ class ItemDetail extends Model
 
     protected $fillable = [
         'item_id',
-        'qty',
+
         'status',
-        'description'
+        'description',
+        'serial_number',
     ];
 
     protected $hidden = [
@@ -35,7 +36,7 @@ class ItemDetail extends Model
         'deleted_at',
     ];
 
-    protected $cast = [
+    protected $casts= [
         'status' => Status::class
     ];
 
@@ -46,12 +47,6 @@ class ItemDetail extends Model
         static::creating(function ($model) {
             $model->id = (string) Str::uuid();
         });
-    }
-
-
-    public function getRouteKeyName()
-    {
-        return 'status';
     }
 
     public function id(): Attribute{
