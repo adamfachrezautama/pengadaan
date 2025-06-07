@@ -38,12 +38,6 @@ class Category extends Model
         'deleted_at',
     ];
 
-    // mencari berdasarkan kolom keterangan.
-    public function getRouteKeyName()
-    {
-        return 'description';
-    }
-
     // relasi dengan item
     // satu kategori memiliki banyak item
     // satu item hanya memiliki satu kategori

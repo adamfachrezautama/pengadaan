@@ -9,8 +9,8 @@
             <div class="row">
               <div class="col-md-6"></div>
               <div class="col-md-6 text-end">
-                <a type="submit" class="btn btn-primary" href="{{ route('departments.create') }}">
-                  Add Department
+                <a type="submit" class="btn btn-primary" href="{{ route('categories.create') }}">
+                  Add Category
                 </a>
               </div>
             </div>
@@ -33,7 +33,7 @@
             <div class="md-12 card">
                   <div class="card-header">
                     <div class="row">
-                        <div class="col-md-6"><h3>Department</h3></div>
+                        <div class="col-md-6"><h3>Category</h3></div>
                         <div class="col-md-6 text-end">
                             <form class="d-flex" role="search">
                             <input
@@ -54,26 +54,24 @@
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Department Name</th>
-                          <th>Department Code</th>
+                          <th>Description</th>
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse ($department as $dp)
+                        @forelse ($categories as $category)
                         <tr class="align-middle">
-                        <td>{{$dp->id}}</td>
-                        <td>{{$dp->department_name}}</td>
-                        <td>{{$dp->department_code}}</td>
+                        <td>{{$category->id}}</td>
+                        <td>{{$category->description}}</td>
                         <td style="width: 120px">
                             <div class="d-flex justify-content-center gap-2">
                                 {{-- Tombol Edit --}}
-                                <a href="{{ route('departments.edit', $dp->id) }}" class="btn btn-sm btn-success">
+                                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-success">
                                 <i class="bi bi-pencil"></i> Edit
                                 </a>
 
                                 {{-- Tombol Delete --}}
-                                <form action="{{ route('departments.destroy', $dp->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -86,7 +84,7 @@
                         </tr>
                         @empty
                         <tr>
-                        <td colspan="3" class="text-center">No Department registered</td>
+                        <td colspan="3" class="text-center">No Categories registered</td>
                         </tr>
                         @endforelse
 
@@ -97,7 +95,7 @@
                   <div class="clearfix card-footer">
                     <ul class="m-0 pagination pagination-sm float-end">
                      <div class="clearfix card-footer">
-                        {{ $department->links('pagination::bootstrap-5') }}
+                        {{ $categories->links('pagination::bootstrap-5') }}
                         </div>
                     </ul>
                   </div>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
+
 
 
 class Department extends Model
@@ -31,6 +31,7 @@ class Department extends Model
 
     protected $fillable = [
         'department_name',
+        'department_code'
     ];
 
     protected $hidden = [
@@ -38,16 +39,21 @@ class Department extends Model
         'updated_at',
         'deleted_at',
     ];
-    public function getRouteKeyName()
-    {
-        return 'department_name';
-    }
+
 
     protected function DepartmentName(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => ucfirst($value),
             set: fn ($value) => strtolower($value)
+        );
+    }
+
+    public function DepartmentCode(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => strtoupper($value),
+            set: fn ($value) => strtoupper($value)
         );
     }
 

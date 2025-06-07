@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ItemDetail;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
 class ItemDetailSeeder extends Seeder
@@ -13,5 +14,16 @@ class ItemDetailSeeder extends Seeder
     public function run(): void
     {
         //
+
+        $itemDetails = [
+            [
+                'id' => (string)Str::uuid(),
+                'item_id' => '9a41c1ee-ecd8-411c-8a46-092b1b0562dc',
+                'status' => 'available',
+                'description' => 'kertas ukuran a4 sebanyak 1 rim'
+            ]
+        ];
+
+        ItemDetail::insert($itemDetails);
     }
 }

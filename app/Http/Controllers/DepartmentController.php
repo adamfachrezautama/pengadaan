@@ -14,27 +14,46 @@ class DepartmentController extends Controller
     //
 
     public function index(){
-        $department = Department::get();
-        return view('layouts.department.index',[
-            "departments" => $department,
-        ]);
+        $department = Department::all();
+        $department = Department::paginate(5);
+
+        $query = request()->query('search');
+        if($query){
+            $department = Department::where('department_name','ILIKE',"%{$query}%")->paginate(5);
+            $department->appends(['search' => $query]);
+        }
+
+        return view('layouts.department.index',compact('department'));
     }
 
     public function create(){
         return view('layouts.department.create');
     }
 
-    public function edit(Department $department){
-        return view('layouts.department.edit',[
-            'department' => $department,
-        ]);
+    public function store(Store $request){
+
+
+       Department::create($request->validated());
+
+        return redirect()->route('departments.index')->with('success', 'department berhasil ditambahkan');
+    }
+
+    public function show(Department $department){
+        abort(404);
+    }
+
+     public function edit(Department $department){
+        return view('layouts.department.edit',compact('department'));
     }
 
     public function update(Update $request, Department $department){
-        return redirect();
+        $department->update($request->validated());
+        return redirect()->route('departments.index')->with('success','Departemen Berhasil Diperbaharui');
     }
 
-    public function store(Store $request){
-        return redirect();
+    public function destroy(Department $department){
+        $department->delete();
+        return redirect()->route('departments.index')->with('success', 'Departemen Berhasil dihapus');
     }
+
 }

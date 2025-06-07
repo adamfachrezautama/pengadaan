@@ -36,9 +36,16 @@
               </li>
 
               <li class="nav-item">
-                <a href="./generate/theme.html" class="nav-link">
+                <a href="/departments" class="nav-link">
                   <i class="nav-icon bi bi-palette"></i>
                   <p>Department</p>
+                </a>
+              </li>
+
+               <li class="nav-item">
+                <a href="/categories" class="nav-link">
+                  <i class="nav-icon bi bi-palette"></i>
+                  <p>Category</p>
                 </a>
               </li>
 

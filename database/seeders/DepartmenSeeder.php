@@ -18,37 +18,44 @@ class DepartmenSeeder extends Seeder
         $departments =[
             [
                  'id' => (string) Str::uuid(),
-                'nama_departement' => 'IT',
+                'department_name' => 'Iformation Technology Department',
+                'department_code' => 'IT',
                 'created_at' => now(),
             ],
             [
                  'id' => (string) Str::uuid(),
-                'nama_departement' => 'HRD',
+                'department_name' => 'Human Resource Department',
+                'department_code' => 'HR',
                 'created_at' => now(),
             ],
             [
                  'id' => (string) Str::uuid(),
-                'nama_departement' => 'Logistik',
+                'department_name' => 'Logistic Department',
+                'department_code' => 'LOG',
                 'created_at' => now(),
             ],
             [
                  'id' => (string) Str::uuid(),
-                'nama_departement' => 'Keuangan',
+                'department_name' => 'Finance Department',
+                'department_code' => 'IT',
                 'created_at' => now(),
             ],
             [
                  'id' => (string) Str::uuid(),
-                'nama_departement' => 'Marketing',
+                'department_name' => 'Marketing Department',
+                'department_code' => 'MR',
                 'created_at' => now(),
             ],
             [
                  'id' => (string) Str::uuid(),
-                'nama_departement' => 'Operasional',
+                'department_name' => 'Operasional Department',
+                'department_code' => 'OP',
                 'created_at' => now(),
             ],
             [
                  'id' => (string) Str::uuid(),
-                'nama_departement' => 'Produksi',
+                'department_name' => 'Production Department',
+                'department_code' => 'PO',
                 'created_at' => now(),
             ],
         ];

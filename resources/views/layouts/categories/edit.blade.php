@@ -31,32 +31,24 @@
                 <!--begin::Quick Example-->
                 <div class="mb-12 card card-primary card-outline">
                   <!--begin::Header-->
-                  <div class="card-header"><div class="card-title">Add Department</div></div>
+                  <div class="card-header"><div class="card-title">Edit Category {{$category->description}}</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
-                  <form action="{{route('departments.store')}}" method="post">
+                  <form action="{{route('categories.update', $category->id)}}" method="post">
                     @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{$category->id}}">
                     <!--begin::Body-->
                     <div class="card-body">
                       <div class="mb-3">
-                        <label for="department_name" class="form-label">department name</label>
+                        <label for="exampleInputEmail1" class="form-label">Description</label>
                         <input
                           type="text"
                           class="form-control"
-                          id="department_name"
-                          name="department_name"
-                          aria-describedby="department_name"
-                        />
-                      </div>
-
-                        <div class="mb-3">
-                        <label for="department_code" class="form-label">department code</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="department_code"
-                          name="department_code"
-                          aria-describedby="department_code"
+                          id="description"
+                          name="description"
+                          aria-describedby="description"
+                            value="{{old('description') ?: $category->description}}"
                         />
                       </div>
 

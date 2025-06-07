@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'user'])->default('user');
             $table->uuid('department_id')->nullable();
-            $table->foreign('departement_id')
+            $table->foreign('department_id')
                     ->references('id')
                     ->on('departments')
                     ->nullOnDelete();
