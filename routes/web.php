@@ -34,5 +34,6 @@ Route::resource('items', ItemsController::class)->names([
     'store' => 'items.store',
     'edit' => 'items.edit',
     'update' => 'items.update',
-    'destroy' => 'items.destroy'
+    'destroy' => 'items.destroy',
+    'show' => 'items.show'
 ]);

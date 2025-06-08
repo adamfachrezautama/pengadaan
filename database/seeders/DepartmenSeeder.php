@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -37,7 +38,7 @@ class DepartmenSeeder extends Seeder
             [
                  'id' => (string) Str::uuid(),
                 'department_name' => 'Finance Department',
-                'department_code' => 'IT',
+                'department_code' => 'FID',
                 'created_at' => now(),
             ],
             [
@@ -59,5 +60,7 @@ class DepartmenSeeder extends Seeder
                 'created_at' => now(),
             ],
         ];
+
+        Department::insert($departments);
     }
 }

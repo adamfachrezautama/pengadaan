@@ -15,21 +15,24 @@ class ItemsController extends Controller
     //
 
     public function index(){
-        $items = Item::all();
-        $items = Item::paginate(5);
+    $query = request()->query('search');
 
-        $query = request()->query('search');
-        if($query){
-            $items = Item::where('item_name', 'ILIKE', "%{$query}%")->paginate(5);
-            $items->appends(['search' => $query]);
-        }
-        return view('layouts.items.index', compact('items'));
+    $items = Item::with('category');
+
+    if ($query) {
+        $items = $items->where('item_name', 'ILIKE', "%{$query}%");
     }
+
+    $items = $items->paginate(5)->appends(['search' => $query]);
+
+    return view('items.index', compact('items'));
+}
+
 
     public function create(){
         $categories = Category::all();
 
-        return view('layouts.items.create',compact('categories'));
+        return view('items.create',compact('categories'));
     }
 
 
@@ -69,7 +72,7 @@ class ItemsController extends Controller
     public function edit(Item $item){
          $categories = Category::all();
 
-        return view('layouts.items.edit',compact('item','categories'));
+        return view('items.edit',compact('item','categories'));
     }
 
 
@@ -123,7 +126,10 @@ class ItemsController extends Controller
     }
 
 
-    public function show($id){
-        return view('layouts.items.show', compact('id'));
-    }
+   public function show($id)
+{
+    $item = Item::with('itemDetails')->findOrFail($id);
+    return view('items.show', compact('item'));
+}
+
 }

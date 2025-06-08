@@ -23,11 +23,11 @@ class DepartmentController extends Controller
             $department->appends(['search' => $query]);
         }
 
-        return view('layouts.department.index',compact('department'));
+        return view('department.index',compact('department'));
     }
 
     public function create(){
-        return view('layouts.department.create');
+        return view('department.create');
     }
 
     public function store(Store $request){
@@ -43,7 +43,7 @@ class DepartmentController extends Controller
     }
 
      public function edit(Department $department){
-        return view('layouts.department.edit',compact('department'));
+        return view('department.edit',compact('department'));
     }
 
     public function update(Update $request, Department $department){

@@ -24,7 +24,6 @@ class ItemDetail extends Model
 
     protected $fillable = [
         'item_id',
-
         'status',
         'description',
         'serial_number',
@@ -51,7 +50,7 @@ class ItemDetail extends Model
 
     public function id(): Attribute{
         return Attribute::make(
-            get: fn($value) => strtoupper($value)
+            get: fn($value) => strtolower($value)
         );
     }
 
@@ -59,13 +58,6 @@ class ItemDetail extends Model
         return Attribute::make(
             get: fn($value) => Status::from($value),
             set: fn($value) => $value instanceof Status ? $value->value : strtolower($value)
-        );
-    }
-
-    public function qty(): Attribute{
-        return Attribute::make(
-            get: fn($value) => (int)$value,
-            set: fn($value) => max((int) $value, 0) // tidak boleh negatif
         );
     }
 
@@ -123,26 +115,12 @@ class ItemDetail extends Model
             $q->where('brand', 'like', '%' . $brand . '%');
         });
     }
-    public function scopeWithSpecification($query, $specification)
-    {
-        return $query->whereHas('item', function ($q) use ($specification) {
-            $q->whereJsonContains('specification', $specification);
-        });
-    }
-    public function scopeWithTotalStock($query, $totalStock)
-    {
-        return $query->whereHas('item', function ($q) use ($totalStock) {
-            $q->where('total_stock', '>=', $totalStock);
-        });
-    }
+
     public function scopeWithDescription($query, $description)
     {
         return $query->where('description', 'like', '%' . $description . '%');
     }
-    public function scopeWithQty($query, $qty)
-    {
-        return $query->where('qty', '>=', $qty);
-    }
+
     public function scopeWithStatus($query, $status)
     {
         return $query->where('status', $status);

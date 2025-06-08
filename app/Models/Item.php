@@ -59,7 +59,7 @@ class Item extends Model
     public function id(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => strtoupper($value)
+            get: fn($value) => strtolower($value)
         );
     }
 

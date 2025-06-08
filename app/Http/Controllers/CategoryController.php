@@ -22,12 +22,12 @@ class CategoryController extends Controller
         ->paginate(5);
         $categories->appends(['search' => $query]);
     }
-        return view('layouts.categories.index', compact('categories'));
+        return view('categories.index', compact('categories'));
     }
 
     public function create()
     {
-        return view('layouts.categories.create');
+        return view('categories.create');
     }
 
     public function store(Store $request)
@@ -43,7 +43,7 @@ class CategoryController extends Controller
     }
 
     public function edit(Category $category){
-        return view('layouts.categories.edit', compact('category'));
+        return view('categories.edit', compact('category'));
     }
 
     public function update(Update $request, Category $category)
