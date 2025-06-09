@@ -21,6 +21,7 @@ class Submission extends Model
 
         'submission_number',
         'submission_date',
+        'status', 'processed_by', 'processed_at',
 
     ];
 
@@ -42,11 +43,6 @@ class Submission extends Model
         'updated_at',
         'deleted_at',
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'submission_number';
-    }
 
     // Start Getter Setter
 
@@ -74,11 +70,10 @@ class Submission extends Model
 
 
 
-    // Relasi dengan SubmissionDetail
-    public function submissionDetails()
-    {
-        return $this->hasMany(SubmissionDetail::class, 'submission_id');
-    }
+        public function processedBy()
+        {
+            return $this->belongsTo(User::class, 'processed_by');
+        }
 
 
 

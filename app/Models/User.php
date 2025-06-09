@@ -33,10 +33,22 @@ class User extends Authenticatable
         static::creating(function ($model){
             $model->id = (string) Str::uuid();
 
-            $lastNip = static::where('nip', 'like', 'PEG-%')->lates()->value('nip');
+            $lastNip = static::where('nip', 'like', 'PEG-%')->latest()->value('nip');
 
-            $model->nip = Str::increment($lastNip ?? 'PEG');
-        });
+           $lastNip = static::where('nip', 'like', 'PEG-%')
+            ->orderBy('nip', 'desc')
+            ->value('nip');
+
+        if ($lastNip) {
+            // Ambil angka terakhir dari 'PEG-001'
+            $number = (int) substr($lastNip, 4);
+            $number++;
+            $model->nip = 'PEG-' . str_pad($number, 3, '0', STR_PAD_LEFT);
+        } else {
+            $model->nip = 'PEG-001';
+        }
+    });
+
     }
 
     protected $fillable = [
@@ -47,13 +59,6 @@ class User extends Authenticatable
         'role',
         'department_id',
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'nip';
-    }
-
-
 
     /**
      * The attributes that should be hidden for serialization.
@@ -98,7 +103,7 @@ class User extends Authenticatable
 
     public function Department()
     {
-        return $this->belongsTo(Department::class, 'depatment_id','id');
+        return $this->belongsTo(Department::class, 'department_id','id');
     }
 
     public function submissionDetail()

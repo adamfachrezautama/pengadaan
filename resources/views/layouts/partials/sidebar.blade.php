@@ -27,41 +27,53 @@
               role="menu"
               data-accordion="false"
             >
-
-             <li class="nav-item">
+            <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
-                  <i class="nav-icon bi bi-palette"></i>
-                  <p>Dashboard</p>
+                <i class="nav-icon bi bi-palette"></i>
+                <p>Dashboard</p>
                 </a>
-              </li>
+            </li>
 
-              <li class="nav-item">
-                <a href="{{ route('departments.index')}}" class="nav-link">
-                  <i class="nav-icon bi bi-palette"></i>
-                  <p>Department</p>
+             {{-- Semua user bisa akses Submission --}}
+            <li class="nav-item">
+                <a href="{{ route('submissions.index') }}" class="nav-link">
+                    <i class="nav-icon bi bi-palette"></i>
+                    <p>Submission</p>
                 </a>
-              </li>
+            </li>
 
-               <li class="nav-item">
-                <a href="{{route('categories.index')}}" class="nav-link">
-                  <i class="nav-icon bi bi-palette"></i>
-                  <p>Category</p>
-                </a>
-              </li>
+               @if(auth()->user()->role === 'admin')
 
-                <li class="nav-item">
-                <a href="{{ route('items.index')}}" class="nav-link">
-                  <i class="nav-icon bi bi-palette"></i>
-                  <p>Item</p>
-                </a>
-              </li>
+          <li class="nav-item">
+            <a href="{{ route('users.index')}}" class="nav-link">
+              <i class="nav-icon bi bi-palette"></i>
+              <p>User</p>
+            </a>
+          </li>
 
-                <li class="nav-item">
-                <a href="./generate/theme.html" class="nav-link">
-                  <i class="nav-icon bi bi-palette"></i>
-                  <p>Submission</p>
-                </a>
-              </li>
+          <li class="nav-item">
+            <a href="{{ route('departments.index')}}" class="nav-link">
+              <i class="nav-icon bi bi-palette"></i>
+              <p>Department</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('categories.index')}}" class="nav-link">
+              <i class="nav-icon bi bi-palette"></i>
+              <p>Category</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('items.index')}}" class="nav-link">
+              <i class="nav-icon bi bi-palette"></i>
+              <p>Item</p>
+            </a>
+          </li>
+        @endif
+
+
 
 
             </ul>
