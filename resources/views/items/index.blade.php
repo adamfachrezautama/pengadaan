@@ -30,6 +30,8 @@
                 <th>Brand</th>
                 <th>Stok Total</th>
                 <th>Kategori</th>
+                 <th>harga</th>
+                <th>gambar</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -40,6 +42,16 @@
                     <td>{{ $item->brand }}</td>
                     <td>{{ $item->total_stock }}</td>
                     <td>{{ $item->category->description ?? '-' }}</td>
+                    <td>{{ $item->category->price ?? '-' }}</td>
+                    <td>
+                        @if($item->image)
+                            <img src="{{ asset('storage/' . $item->image) }}"
+                                alt="{{ $item->item_name }}"
+                                width="80" class="img-thumbnail">
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('items.show', $item) }}" class="btn btn-info btn-sm">Lihat</a>
                         <a href="{{ route('items.edit', $item) }}" class="btn btn-warning btn-sm">Edit</a>

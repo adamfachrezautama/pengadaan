@@ -7,8 +7,8 @@ use App\Http\Requests\Admin\Items\Store;
 use App\Http\Requests\Admin\Items\Update;
 use App\Models\Category;
 use App\Models\Item;
-use App\Models\ItemDetail;
-use Illuminate\Support\Facades\DB;
+use App\Services\LogActivityService;
+use Illuminate\Support\Facades\Storage;
 
 class ItemsController extends Controller
 {
@@ -36,38 +36,26 @@ class ItemsController extends Controller
     }
 
 
-  public function store(Store $request)
-{
-    DB::beginTransaction();
+    public function store(Store $request)
+    {
+        // Ambil semua data yang valid dari request
+        $data = $request->validated();
 
-    try {
-        $item = Item::create($request->only([
-            'item_name',
-            'brand',
-            'total_stock',
-            'category_id',
-        ]));
-
-        $status = $item->total_stock > 0 ? 'available' : 'unavailable';
-
-        foreach ($request->input('details') as $detail) {
-            $item->itemDetails()->create([
-                'serial_number' => $detail['serial_number'] ?? null,
-                'description' => $detail['description'] ?? null,
-                'status' => $status,
-            ]);
+        // Upload image kalau ada
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('items', 'public');
         }
 
-        DB::commit();
+        // Simpan item
+        $item = Item::create($data);
+
+        // Log aktivitas
+        LogActivityService::add("Tambah barang: {$item->item_name}");
 
         return redirect()->route('items.index')
-            ->with('success', 'Item dan detail berhasil ditambahkan.');
-
-    } catch (\Throwable $e) {
-        DB::rollBack();
-        return back()->withErrors(['error' => 'Gagal menyimpan data: ' . $e->getMessage()])->withInput();
+                        ->with('success', 'Item dan detail berhasil ditambahkan.');
     }
-}
+
 
     public function edit(Item $item){
          $categories = Category::all();
@@ -75,48 +63,26 @@ class ItemsController extends Controller
         return view('items.edit',compact('item','categories'));
     }
 
-
     public function update(Update $request, Item $item)
-{
-    // Validasi data item utama
-    $item->update([
-        'item_name' => $request->item_name,
-        'brand' => $request->brand,
-        'total_stock' => $request->total_stock,
-        'category_id' => $request->category_id,
+    {
+    $data = $request->validated();
 
-    ]);
-
-    // Ambil semua ID detail yang di-submit
-    $submittedDetailIds = collect($request->details)->pluck('id')->filter()->toArray();
-
-    // Soft delete detail yang tidak ada di request
-    $item->itemDetails()
-        ->whereNotIn('id', $submittedDetailIds)
-        ->delete();
-
-    // Loop input details
-    foreach ($request->details as $detail) {
-        if (isset($detail['id'])) {
-            // Update detail yang sudah ada
-            ItemDetail::where('id', $detail['id'])->update([
-                'serial_number' => $detail['serial_number'] ?? null,
-                'description' => $detail['description'] ?? null,
-                'status' => $detail['status'] ?? 'available',
-            ]);
-        } else {
-            // Tambah baru
-            ItemDetail::create([
-                'item_id' => $item->id,
-                'serial_number' => $detail['serial_number'] ?? null,
-                'description' => $detail['description'] ?? null,
-                'status' => $detail['status'] ?? 'available',
-            ]);
+    // Upload image baru jika ada
+    if ($request->hasFile('image')) {
+        // hapus image lama
+        if ($item->image) {
+            Storage::disk('public')->delete($item->image);
         }
+        $data['image'] = $request->file('image')->store('items', 'public');
     }
 
-    return redirect()->route('items.index')->with('success', 'Item berhasil diperbarui.');
+    $item->update($data);
+
+    LogActivityService::add("Update barang: {$item->item_name}");
+
+    return redirect()->route('items.index')->with('success', 'Item berhasil diupdate.');
 }
+
 
 
 

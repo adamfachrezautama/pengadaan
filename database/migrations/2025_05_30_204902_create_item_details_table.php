@@ -12,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('item_details', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('item_id');
-            $table->foreign('item_id')
-            ->references('id')
-            ->on('items')->onDelete('cascade');
+            $table->id();
+             $table->foreignId('item_id')->constrained()->onDelete('cascade');
             $table->enum('status',['available','unavailable'])
             ->default('available');
             $table->text('description')->nullable();

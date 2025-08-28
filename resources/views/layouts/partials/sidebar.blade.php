@@ -34,29 +34,29 @@
                 </a>
             </li>
 
-             {{-- Semua user bisa akses Submission --}}
+
             <li class="nav-item">
-                <a href="{{ route('submissions.index') }}" class="nav-link">
+                <a href="{{ route('transactions.index') }}" class="nav-link">
                     <i class="nav-icon bi bi-palette"></i>
-                    <p>Submission</p>
+                    <p>Transaction</p>
+                </a>
+            </li>
+
+              <li class="nav-item">
+                <a href="{{ route('reports.index') }}" class="nav-link">
+                    <i class="nav-icon bi bi-palette"></i>
+                    <p>Report</p>
                 </a>
             </li>
 
                @if(auth()->user()->role === 'admin')
 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="{{ route('users.index')}}" class="nav-link">
               <i class="nav-icon bi bi-palette"></i>
               <p>User</p>
             </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="{{ route('departments.index')}}" class="nav-link">
-              <i class="nav-icon bi bi-palette"></i>
-              <p>Department</p>
-            </a>
-          </li>
+          </li> --}}
 
           <li class="nav-item">
             <a href="{{route('categories.index')}}" class="nav-link">
@@ -71,6 +71,7 @@
               <p>Item</p>
             </a>
           </li>
+
         @endif
 
 

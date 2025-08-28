@@ -54,7 +54,7 @@
             <li class="nav-item dropdown user-menu">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 
-                <span class="d-none d-md-inline">Halo,  {{ auth()->user()->name }}</span>
+                <span class="d-none d-md-inline">Halo, {{ auth()->check() ? auth()->user()->name : 'Guest' }}</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                 <!--begin::Menu Footer-->

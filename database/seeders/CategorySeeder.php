@@ -17,37 +17,37 @@ class CategorySeeder extends Seeder
         //
         $categories = [
             [
-                 'id' => (string) Str::uuid(),
+
                 'description' => 'peralatan elektronik',
                 'created_at' => now(),
             ],
             [
-                 'id' => (string) Str::uuid(),
+
                 'description' => 'Perabotan Kantor',
                 'created_at' => now(),
             ],
             [
-                 'id' => (string) Str::uuid(),
+
                 'description' => 'Peralatan Kebersihan',
                 'created_at' => now(),
             ],
             [
-                 'id' => (string) Str::uuid(),
+
                 'description' => 'Peralatan Pantry',
                 'created_at' => now(),
             ],
             [
-                 'id' => (string) Str::uuid(),
+
                 'description' => 'Perlengkapan Operasional',
                 'created_at' => now(),
             ],
             [
-                 'id' => (string) Str::uuid(),
+
                 'description' => 'Peralatan Keamanan',
                 'created_at' => now(),
             ],
             [
-                 'id' => (string) Str::uuid(),
+
                 'description' => 'Alat Perbaikan',
                 'created_at' => now(),
             ],

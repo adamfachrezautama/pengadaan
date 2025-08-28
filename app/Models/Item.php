@@ -13,24 +13,18 @@ class Item extends Model
     use SoftDeletes,HasFactory;
 
     protected $table = "items";
-    public $incrementing = false;
-    protected $keyType = 'string';
     protected $primaryKey = 'id';
 
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($model) {
-            $model->id = (string) Str::uuid();
-        });
-    }
 
      protected $fillable = [
         'item_name',
         'brand',
         'total_stock',
+        'price',
+        'image',
         'category_id',
+
+
     ];
 
     protected $hidden =
@@ -76,9 +70,4 @@ class Item extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    // relasi dengan item details
-    public function itemDetails()
-    {
-        return $this->hasMany(ItemDetail::class, 'item_id','id');
-    }
 }

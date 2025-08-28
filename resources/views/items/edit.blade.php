@@ -34,6 +34,12 @@
             <input type="number" name="total_stock" class="form-control" value="{{ old('total_stock', $item->total_stock) }}" required>
         </div>
 
+             {{-- price --}}
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" name="price" class="form-control" min="1" value="{{ old('price') }}" required>
+        </div>
+
         <div class="form-group">
             <label>Kategori</label>
             <select name="category_id" class="form-control">
@@ -46,71 +52,17 @@
             </select>
         </div>
 
-
-        <hr>
-        <h4>Detail Item</h4>
-
-        <div id="details-container">
-            @foreach($item->itemDetails as $i => $detail)
-                <div class="detail-group border p-3 mb-2">
-                    <input type="hidden" name="details[{{ $i }}][id]" value="{{ $detail->id }}">
-                    <div class="form-group">
-                        <label>Serial Number</label>
-                        <input type="text" name="details[{{ $i }}][serial_number]" class="form-control" value="{{ old("details.$i.serial_number", $detail->serial_number) }}">
-                    </div>
-                    <div class="form-group">
-                        <label>Deskripsi</label>
-                        <input type="text" name="details[{{ $i }}][description]" class="form-control" value="{{ old("details.$i.description", $detail->description) }}">
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select name="details[{{ $i }}][status]" class="form-control">
-                            <option value="available" {{ $detail->status == 'available' ? 'selected' : '' }}>Available</option>
-                            <option value="unavailable" {{ $detail->status == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-danger remove-detail mt-2">Hapus</button>
+        <div class="form-group">
+            <label>Gambar Item</label>
+            @if($item->image)
+                <div class="mb-2">
+                    <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->item_name }}" width="100">
                 </div>
-            @endforeach
+            @endif
+            <input type="file" name="image" class="form-control" accept="image/*">
         </div>
 
-        <button type="button" class="btn btn-secondary mb-3" id="add-detail">+ Tambah Detail</button>
-
-        <button type="submit" class="btn btn-primary btn-block">Update</button>
-    </form>
-</div>
-
-{{-- Script --}}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    let index = {{ $item->itemDetails->count() }};
-
-    $('#add-detail').on('click', function () {
-        const html = `
-        <div class="detail-group border p-3 mb-2">
-            <div class="form-group">
-                <label>Serial Number</label>
-                <input type="text" name="details[${index}][serial_number]" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Deskripsi</label>
-                <input type="text" name="details[${index}][description]" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select name="details[${index}][status]" class="form-control">
-                    <option value="available">Available</option>
-                    <option value="unavailable">Unavailable</option>
-                </select>
-            </div>
-            <button type="button" class="btn btn-danger remove-detail mt-2">Hapus</button>
-        </div>`;
-        $('#details-container').append(html);
-        index++;
-    });
-
-    $(document).on('click', '.remove-detail', function () {
-        $(this).closest('.detail-group').remove();
-    });
-</script>
+         <div class="card-footer">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
 @endsection

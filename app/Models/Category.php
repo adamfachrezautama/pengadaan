@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Support\Str;
+
 
 class Category extends Model
 {
@@ -15,18 +15,10 @@ class Category extends Model
     use SoftDeletes,HasFactory;
 
     protected $table = "categories";
-    public $incrementing = false;
-    protected $keyType = 'string';
     protected $primaryKey = 'id';
 
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($model) {
-            $model->id = (string) Str::uuid();
-        });
-    }
+
 
      protected $fillable = [
         'description'

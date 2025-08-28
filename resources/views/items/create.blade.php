@@ -15,99 +15,54 @@
         </div>
     @endif
 
-    <form action="{{ route('items.store') }}" method="POST">
-        @csrf
+<form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
 
-        {{-- Item --}}
-        <div class="form-group">
-            <label>Nama Item</label>
-            <input type="text" name="item_name" class="form-control" value="{{ old('item_name') }}" required>
-        </div>
+    {{-- Nama Item --}}
+    <div class="form-group">
+        <label>Nama Item</label>
+        <input type="text" name="item_name" class="form-control" value="{{ old('item_name') }}" required>
+    </div>
 
-        <div class="form-group">
-            <label>Brand</label>
-            <input type="text" name="brand" class="form-control" value="{{ old('brand') }}" required>
-        </div>
+    {{-- Brand --}}
+    <div class="form-group">
+        <label>Brand</label>
+        <input type="text" name="brand" class="form-control" value="{{ old('brand') }}" required>
+    </div>
 
-        <div class="form-group">
-            <label>Total Stok</label>
-            <input type="number" name="total_stock" class="form-control" min="1" value="{{ old('total_stock') }}" required>
-        </div>
+    {{-- Total Stok --}}
+    <div class="form-group">
+        <label>Total Stok</label>
+        <input type="number" name="total_stock" class="form-control" min="1" value="{{ old('total_stock') }}" required>
+    </div>
 
-        <div class="form-group">
-            <label>Kategori</label>
-            <select name="category_id" class="form-control">
-                <option value="">-- Pilih Kategori --</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                        {{ $category->description }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+     {{-- price --}}
+    <div class="form-group">
+        <label>Price</label>
+        <input type="number" name="price" class="form-control" min="1" value="{{ old('price') }}" required>
+    </div>
 
-        <hr>
-        <h4>Detail Item</h4>
+    {{-- Kategori --}}
+    <div class="form-group">
+        <label>Kategori</label>
+        <select name="category_id" class="form-control">
+            <option value="">-- Pilih Kategori --</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                    {{ $category->description }}
+                </option>
+            @endforeach
+        </select>
+    </div>
 
-        <div id="details-container">
-            <div class="detail-group border p-3 mb-2">
-                <div class="form-group">
-                    <label>Serial Number</label>
-                    <input type="text" name="details[0][serial_number]" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Deskripsi</label>
-                    <input type="text" name="details[0][description]" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Status</label>
-                    <select name="details[0][status]" class="form-control">
-                        <option value="available">Available</option>
-                        <option value="unavailable">Unavailable</option>
-                    </select>
-                </div>
-                <button type="button" class="btn btn-danger remove-detail mt-2">Hapus</button>
-            </div>
-        </div>
+    {{-- Gambar --}}
+    <div class="form-group">
+        <label>Gambar Item</label>
+        <input type="file" name="image" class="form-control" accept="image/*">
+    </div>
 
-        <button type="button" class="btn btn-secondary mb-3" id="add-detail">+ Tambah Detail</button>
+    <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+</form>
 
-        <button type="submit" class="btn btn-primary btn-block">Simpan</button>
-    </form>
 </div>
-
-{{-- Script --}}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    let index = 1;
-
-    $('#add-detail').on('click', function () {
-        const detailHtml = `
-            <div class="detail-group border p-3 mb-2">
-                <div class="form-group">
-                    <label>Serial Number</label>
-                    <input type="text" name="details[${index}][serial_number]" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Deskripsi</label>
-                    <input type="text" name="details[${index}][description]" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Status</label>
-                    <select name="details[${index}][status]" class="form-control">
-                        <option value="available">Available</option>
-                        <option value="unavailable">Unavailable</option>
-                    </select>
-                </div>
-                <button type="button" class="btn btn-danger remove-detail mt-2">Hapus</button>
-            </div>
-        `;
-        $('#details-container').append(detailHtml);
-        index++;
-    });
-
-    $(document).on('click', '.remove-detail', function () {
-        $(this).closest('.detail-group').remove();
-    });
-</script>
 @endsection

@@ -31,32 +31,35 @@
                 <!--begin::Quick Example-->
                 <div class="mb-12 card card-primary card-outline">
                   <!--begin::Header-->
-                  <div class="card-header"><div class="card-title">Add Department</div></div>
+                  <div class="card-header"><div class="card-title">Add Transaction</div></div>
                   <!--end::Header-->
                   <!--begin::Form-->
-                  <form action="{{route('departments.store')}}" method="post">
+                  <form action="{{route('transactions.store')}}" method="post">
                     @csrf
                     <!--begin::Body-->
                     <div class="card-body">
                       <div class="mb-3">
-                        <label for="department_name" class="form-label">department name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="department_name"
-                          name="department_name"
-                          aria-describedby="department_name"
-                        />
+                        <label>Barang</label>
+                            <select name="item_id">
+                                @foreach($items as $item)
+                                    <option value="{{ $item->id }}">{{ $item->item_name }} (stok: {{ $item->stok }})</option>
+                                @endforeach
+                            </select>
                       </div>
 
                         <div class="mb-3">
-                        <label for="department_code" class="form-label">department code</label>
-                        <input
+                        <label for="department_code" class="form-label">Type</label>
+                         <select name="tipe">
+                            <option value="masuk">Masuk</option>
+                            <option value="keluar">Keluar</option>
+                        </select>
+
+                         <input
                           type="text"
                           class="form-control"
-                          id="department_code"
-                          name="department_code"
-                          aria-describedby="department_code"
+                          id="jumlah"
+                          name="jumlah"
+                          aria-describedby="jumlah"
                         />
                       </div>
 

@@ -59,15 +59,6 @@
             </div>
           </div>
 
-          <div class="mb-3 input-group">
-            <select name="department_id" class="form-control" required>
-              <option value="" disabled selected>Select Department</option>
-              @foreach($departments as $dept)
-                <option value="{{ $dept->id }}">{{ $dept->department_name }}</option>
-              @endforeach
-            </select>
-          </div>
-
           <div class="row">
             <div class="col-8">
               <a href="{{ route('login') }}" class="text-center">I already have a membership</a>

@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Categories\Store;
 use App\Http\Requests\Admin\Categories\Update;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Services\LogActivityService;
 
 class CategoryController extends Controller
 {
@@ -32,10 +33,13 @@ class CategoryController extends Controller
 
     public function store(Store $request)
     {
-        Category::create($request->validated());
+       $category = Category::create($request->validated());
+
+
+        LogActivityService::add("Tambah kategori: {$category->description}");
 
         return redirect()->route('categories.index')
-                     ->with('success', 'Kategori berhasil ditambahkan.');
+                        ->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     public function show(Category $category){
@@ -49,7 +53,7 @@ class CategoryController extends Controller
     public function update(Update $request, Category $category)
     {
         $category->update($request->validated());
-
+        LogActivityService::add("update kategori: {$category->description}");
         return redirect()->route('categories.index')->with('success', 'Kategori Berhasil Diperbaharui');
     }
 
@@ -57,6 +61,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+        LogActivityService::add("hapus kategori: {$category->description}");
         return redirect()->route('categories.index')->with('success', 'Kategori Berhasil dihapus');
     }
 

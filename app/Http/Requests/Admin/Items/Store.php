@@ -26,13 +26,10 @@ class Store extends FormRequest
             'item_name' => 'required|string|max:255',
             'brand' => 'required|string|max:255|unique:items,brand',
             'total_stock' => 'required|integer|min:0',
-            'category_id' => 'nullable|uuid|exists:categories,id',
+            'category_id' => 'nullable|exists:categories,id',
+             'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
+             'price' => 'integer|min:0',
 
-            // Validasi untuk relasi item_details
-           'details' => 'required|array|min:1',
-            'details.*.serial_number' => 'nullable|string|max:255|distinct|unique:item_details,serial_number',
-            'details.*.description' => 'nullable|string|max:1000',
-            'details.*.status' => 'nullable|in:available,unavailable',
         ];
     }
 
@@ -45,11 +42,11 @@ class Store extends FormRequest
             'brand.unique' => 'Merek sudah terdaftar.',
             'total_stock.required' => 'Stok wajib diisi.',
             'category_id.exists' => 'Kategori tidak valid.',
-
-            // item_details
-            'details.required' => 'Detail item wajib diisi.',
-            'details.*.serial_number.unique' => 'Nomor seri harus unik.',
-            'details.*.serial_number.distinct' => 'Nomor seri tidak boleh duplikat dalam form.',
+            'image.image' => 'File harus berupa gambar.',
+            'image.mimes' => 'Format gambar harus jpg, png, jpeg, atau gif.',
+            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'price.integer' => 'Harga harus berupa angka.',
+            'price.min' => 'Harga tidak boleh negatif.',
         ];
     }
 }

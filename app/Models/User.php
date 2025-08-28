@@ -23,15 +23,13 @@ class User extends Authenticatable
      */
 
     protected $table = "users";
-    public $incrementing = false;
-    protected $keyType = 'string';
     protected $primaryKey = 'id';
 
     protected static function boot()
     {
         parent::boot();
         static::creating(function ($model){
-            $model->id = (string) Str::uuid();
+
 
             $lastNip = static::where('nip', 'like', 'PEG-%')->latest()->value('nip');
 
@@ -57,7 +55,7 @@ class User extends Authenticatable
         'password',
         'nip',
         'role',
-        'department_id',
+
     ];
 
     /**
@@ -99,16 +97,6 @@ class User extends Authenticatable
             get: fn($value) => strtolower($value),
             set: fn($value) => strtolower($value)
         );
-    }
-
-    public function Department()
-    {
-        return $this->belongsTo(Department::class, 'department_id','id');
-    }
-
-    public function submissionDetail()
-    {
-        return $this->hasMany(Submission::class, 'user_id','id');
     }
 
 }

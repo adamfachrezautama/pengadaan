@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('description')->unique();
-            $table->softDeletes();
+             $table->foreignId('item_id')->constrained()->nullOnDelete();
+            $table->foreignId('user_id')->constrained()->nullOnDelete();
+            $table->enum('tipe', ['masuk', 'keluar']);
+            $table->integer('jumlah');
+            $table->date('tanggal')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('transactions');
     }
 };
